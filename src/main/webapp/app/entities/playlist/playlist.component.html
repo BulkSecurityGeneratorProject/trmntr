@@ -1,0 +1,78 @@
+<div>
+    <h2>
+        <span jhiTranslate="trmntrApp.playlist.home.title">Playlists</span>
+        <button class="btn btn-primary float-right create-playlist" [routerLink]="['/', { outlets: { popup: ['playlist-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="trmntrApp.playlist.home.createLabel">
+            Create new Playlist
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="playlists">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="showNumber"><span jhiTranslate="trmntrApp.playlist.showNumber">Show Number</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="theme"><span jhiTranslate="trmntrApp.playlist.theme">Theme</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="guest"><span jhiTranslate="trmntrApp.playlist.guest">Guest</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="airDate"><span jhiTranslate="trmntrApp.playlist.airDate">Air Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="showType"><span jhiTranslate="trmntrApp.playlist.showType">Show Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="recordUrl"><span jhiTranslate="trmntrApp.playlist.recordUrl">Record Url</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createTime"><span jhiTranslate="trmntrApp.playlist.createTime">Create Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="updateTime"><span jhiTranslate="trmntrApp.playlist.updateTime">Update Time</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let playlist of playlists ;trackBy: trackId">
+                <td><a [routerLink]="['../playlist', playlist.id ]">{{playlist.id}}</a></td>
+                <td>{{playlist.showNumber}}</td>
+                <td>{{playlist.theme}}</td>
+                <td>{{playlist.guest}}</td>
+                <td>{{playlist.airDate | date:'mediumDate'}}</td>
+                <td>{{playlist.showType}}</td>
+                <td>{{playlist.recordUrl}}</td>
+                <td>{{playlist.createTime | date:'medium'}}</td>
+                <td>{{playlist.updateTime | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../playlist', playlist.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'playlist/'+ playlist.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'playlist/'+ playlist.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="playlists && playlists.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

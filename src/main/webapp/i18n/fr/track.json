@@ -1,0 +1,24 @@
+{
+    "trmntrApp": {
+        "track" : {
+            "home": {
+                "title": "Tracks",
+                "createLabel": "Créer un nouveau Track",
+                "createOrEditLabel": "Créer ou éditer un Track"
+            },
+            "created": "Un nouveau Track a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Track avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Track avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Track {{ id }} ?"
+            },
+            "detail": {
+                "title": "Track"
+            },
+            "title": "Title",
+            "entry": "Entry",
+            "artist": "Artist",
+            "album": "Album"
+        }
+    }
+}

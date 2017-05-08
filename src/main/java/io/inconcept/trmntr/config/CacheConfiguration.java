@@ -41,6 +41,20 @@ public class CacheConfiguration {
             cm.createCache(io.inconcept.trmntr.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(io.inconcept.trmntr.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(io.inconcept.trmntr.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Album.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Album.class.getName() + ".tracks", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Artist.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Artist.class.getName() + ".tracks", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Entry.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Label.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Label.class.getName() + ".releases", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Member.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Member.class.getName() + ".playlists", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Playlist.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Playlist.class.getName() + ".entries", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Playlist.class.getName() + ".members", jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Track.class.getName(), jcacheConfiguration);
+            cm.createCache(io.inconcept.trmntr.domain.Track.class.getName() + ".entries", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

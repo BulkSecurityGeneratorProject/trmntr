@@ -1,0 +1,30 @@
+{
+    "trmntrApp": {
+        "playlist" : {
+            "home": {
+                "title": "Playlists",
+                "createLabel": "Créer un nouveau Playlist",
+                "createOrEditLabel": "Créer ou éditer un Playlist"
+            },
+            "created": "Un nouveau Playlist a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Playlist avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Playlist avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Playlist {{ id }} ?"
+            },
+            "detail": {
+                "title": "Playlist"
+            },
+            "showNumber": "Show Number",
+            "theme": "Theme",
+            "guest": "Guest",
+            "airDate": "Air Date",
+            "showType": "Show Type",
+            "recordUrl": "Record Url",
+            "createTime": "Create Time",
+            "updateTime": "Update Time",
+            "entry": "Entry",
+            "member": "Member"
+        }
+    }
+}

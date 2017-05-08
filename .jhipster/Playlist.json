@@ -1,0 +1,67 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "entry",
+            "otherEntityName": "entry",
+            "otherEntityRelationshipName": "playlist"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "member",
+            "otherEntityName": "member",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "showNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "theme",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "guest",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "airDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "showType",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "recordUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "updateTime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20170508124845",
+    "entityTableName": "playlist",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no"
+}
