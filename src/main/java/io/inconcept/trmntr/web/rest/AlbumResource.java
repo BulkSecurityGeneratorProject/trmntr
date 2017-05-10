@@ -33,7 +33,7 @@ public class AlbumResource {
     private final Logger log = LoggerFactory.getLogger(AlbumResource.class);
 
     private static final String ENTITY_NAME = "album";
-        
+
     private final AlbumRepository albumRepository;
 
     public AlbumResource(AlbumRepository albumRepository) {
@@ -125,4 +125,23 @@ public class AlbumResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+
+    /**
+     * SEARCH  /_search/albums?query=:query : search for the album corresponding
+     * to the query.
+     *
+     * @param query the query of the album search
+     * @param pageable the pagination information
+     * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @GetMapping("/_search/albums")
+    @Timed
+    public ResponseEntity<List<Album>> searchAlbums(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Albums for query {}", query);
+        Page<Album> page = albumRepository.findByTitleIgnoreCaseContaining(query, pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/albums");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }
