@@ -4,9 +4,23 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="trmntrApp.playlist.showNumber">Show Number</span></dt>
+        <dt><span jhiTranslate="trmntrApp.playlist.showType">Type</span></dt>
+        <dd>
+            <span>{{playlist.showType}}</span>
+        </dd>
+        <dt><span jhiTranslate="trmntrApp.playlist.showNumber">Number</span></dt>
         <dd>
             <span>{{playlist.showNumber}}</span>
+        </dd>
+        <dt><span jhiTranslate="trmntrApp.playlist.airDate">Date</span></dt>
+        <dd>
+            <span>{{playlist.airDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="trmntrApp.playlist.member">Member</span></dt>
+        <dd>
+            <span *ngFor="let member of playlist.members; let last = last">
+                <a [routerLink]="['/member', member?.id ]">{{member.name}}</a>{{last ? '' : ', '}}
+            </span>
         </dd>
         <dt><span jhiTranslate="trmntrApp.playlist.theme">Theme</span></dt>
         <dd>
@@ -15,14 +29,6 @@
         <dt><span jhiTranslate="trmntrApp.playlist.guest">Guest</span></dt>
         <dd>
             <span>{{playlist.guest}}</span>
-        </dd>
-        <dt><span jhiTranslate="trmntrApp.playlist.airDate">Air Date</span></dt>
-        <dd>
-            <span>{{playlist.airDate | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span jhiTranslate="trmntrApp.playlist.showType">Show Type</span></dt>
-        <dd>
-            <span>{{playlist.showType}}</span>
         </dd>
         <dt><span jhiTranslate="trmntrApp.playlist.recordUrl">Record Url</span></dt>
         <dd>
@@ -36,14 +42,46 @@
         <dd>
             <span>{{playlist.updateTime | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="trmntrApp.playlist.member">Member</span></dt>
-        <dd>
-            <span *ngFor="let member of playlist.members; let last = last">
-                <a [routerLink]="['/member', member?.id ]">{{member.id}}</a>{{last ? '' : ', '}}
-            </span>
-        </dd>
     </dl>
-
+    <br/>
+    <div class="table-responsive" *ngIf="entries">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                <th><span jhiTranslate="trmntrApp.entry.position.#">Position</span></th>
+                <th><span jhiTranslate="trmntrApp.artist.detail.title">Artist</span></th>
+                <th><span jhiTranslate="trmntrApp.entry.track">Track</span></th>
+                <th><span jhiTranslate="trmntrApp.album.detail.title">Release</span></th>
+                <th><span jhiTranslate="trmntrApp.label.detail.title">Label</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let entry of entries ;trackBy: trackId">
+                <td>{{entry.position}}</td>
+                <td>
+                    <div *ngIf="entry.track">
+                        <a [routerLink]="['/artist', entry.track.artist?.id ]" >{{entry.track.artist?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="entry.track">
+                        <a [routerLink]="['/track', entry.track?.id ]" >{{entry.track?.title}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="entry.track">
+                        <a [routerLink]="['/album', entry.track.album?.id ]" >{{entry.track.album?.title}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="entry.track">
+                        <a [routerLink]="['/label', entry.track.album.label?.id ]" >{{entry.track.album.label?.name}}</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <button type="submit"
             (click)="previousState()"
             class="btn btn-info">

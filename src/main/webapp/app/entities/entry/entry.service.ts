@@ -30,6 +30,10 @@ export class EntryService {
         });
     }
 
+    findByPlaylistId(playlist_id: number): Observable<Response> {
+        return this.http.get(`${this.resourceUrl}/playlist/${playlist_id}`);
+    }
+
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

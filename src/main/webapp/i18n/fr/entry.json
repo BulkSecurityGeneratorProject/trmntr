@@ -15,9 +15,16 @@
             "detail": {
                 "title": "Entry"
             },
-            "position": "Position",
+            "position": {
+                "title": "Position",
+                "#": "#"
+            },
             "track": "Track",
-            "playlist": "Playlist"
+            "playlist": "Playlist",
+            "action": {
+                "add": "Ajouter une entrée",
+                "delete": "Supprimer l'entrée"
+            }
         }
     }
 }

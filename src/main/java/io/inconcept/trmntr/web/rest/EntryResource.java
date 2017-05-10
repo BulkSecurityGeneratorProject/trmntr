@@ -33,7 +33,7 @@ public class EntryResource {
     private final Logger log = LoggerFactory.getLogger(EntryResource.class);
 
     private static final String ENTITY_NAME = "entry";
-        
+
     private final EntryRepository entryRepository;
 
     public EntryResource(EntryRepository entryRepository) {
@@ -109,6 +109,21 @@ public class EntryResource {
         log.debug("REST request to get Entry : {}", id);
         Entry entry = entryRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(entry));
+    }
+
+    /**
+     * GET  /entries/playlist/:id : get all the entries with playlist "id".
+     *
+     * @param id the id of the playlist from which to retrieve entries
+     * @return the ResponseEntity with status 200 (OK) and with body the entry, or with status 404 (Not Found)
+     */
+    @GetMapping("/entries/playlist/{id}")
+    @Timed
+    public ResponseEntity<List<Entry>> getEntriesByPlaylistId(@PathVariable Long id, @ApiParam Pageable pageable) throws URISyntaxException {
+        log.debug("REST request to get Entries : {}", id);
+        Page<Entry> page = entryRepository.findByPlaylistId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entries/playlist");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
