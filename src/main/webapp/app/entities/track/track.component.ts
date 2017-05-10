@@ -20,6 +20,7 @@ currentAccount: any;
     error: any;
     success: any;
     eventSubscriber: Subscription;
+    currentSearch: string;
     routeData: any;
     links: any;
     totalItems: any;
@@ -53,6 +54,17 @@ currentAccount: any;
     }
 
     loadAll() {
+        if (this.currentSearch) {
+            this.trackService.search({
+                query: this.currentSearch,
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort()}).subscribe(
+                (res: Response) => this.onSuccess(res.json(), res.headers),
+                (res: Response) => this.onError(res.json())
+            );
+            return;
+        }
         this.trackService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
@@ -86,6 +98,21 @@ currentAccount: any;
         }]);
         this.loadAll();
     }
+
+    search (query) {
+        if (!query) {
+            return this.clear();
+        }
+        this.page = 0;
+        this.currentSearch = query;
+        this.router.navigate(['/track', {
+            search: this.currentSearch,
+            page: this.page,
+            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+        }]);
+        this.loadAll();
+    }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {

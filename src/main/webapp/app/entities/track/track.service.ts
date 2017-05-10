@@ -7,6 +7,7 @@ import { Track } from './track.model';
 export class TrackService {
 
     private resourceUrl = 'api/tracks';
+    private resourceSearchUrl = 'api/_search/tracks';
 
     constructor(private http: Http) { }
 
@@ -39,6 +40,12 @@ export class TrackService {
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
+
+    search(req?: any): Observable<Response> {
+        let options = this.createRequestOption(req);
+        return this.http.get(this.resourceSearchUrl, options);
+    }
+
     private createRequestOption(req?: any): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         if (req) {

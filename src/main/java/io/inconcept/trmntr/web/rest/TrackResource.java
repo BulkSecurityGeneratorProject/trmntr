@@ -33,7 +33,7 @@ public class TrackResource {
     private final Logger log = LoggerFactory.getLogger(TrackResource.class);
 
     private static final String ENTITY_NAME = "track";
-        
+
     private final TrackRepository trackRepository;
 
     public TrackResource(TrackRepository trackRepository) {
@@ -125,4 +125,22 @@ public class TrackResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * SEARCH  /_search/track?query=:query : search for the track corresponding
+     * to the query.
+     *
+     * @param query the query of the track search
+     * @param pageable the pagination information
+     * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @GetMapping("/_search/tracks")
+    @Timed
+    public ResponseEntity<List<Track>> searchLabels(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Tracks for query {}", query);
+        Page<Track> page = trackRepository.findByTitleIgnoreCaseContaining(query, pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/tracks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }
