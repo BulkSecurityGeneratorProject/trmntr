@@ -29,12 +29,12 @@
                 <td>{{entry.position}}</td>
                 <td>
                     <div *ngIf="entry.track">
-                        <a [routerLink]="['../track', entry.track?.id ]" >{{entry.track?.id}}</a>
+                        <a [routerLink]="['../track', entry.track?.id ]" >{{entry.track?.title}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="entry.playlist">
-                        <a [routerLink]="['../playlist', entry.playlist?.id ]" >{{entry.playlist?.id}}</a>
+                        <a [routerLink]="['../playlist', entry.playlist?.id ]" >{{entry.playlist?.showType}}#{{entry.playlist?.showNumber}}</a>
                     </div>
                 </td>
                 <td class="text-right">

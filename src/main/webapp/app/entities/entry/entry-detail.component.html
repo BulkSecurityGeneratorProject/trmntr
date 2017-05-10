@@ -11,13 +11,13 @@
         <dt><span jhiTranslate="trmntrApp.entry.track">Track</span></dt>
         <dd>
             <div *ngIf="entry.track">
-                <a [routerLink]="['/track', entry.track?.id]">{{entry.track?.id}}</a>
+                <a [routerLink]="['/track', entry.track?.id]">{{entry.track?.title}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="trmntrApp.entry.playlist">Playlist</span></dt>
         <dd>
             <div *ngIf="entry.playlist">
-                <a [routerLink]="['/playlist', entry.playlist?.id]">{{entry.playlist?.id}}</a>
+                <a [routerLink]="['/playlist', entry.playlist?.id]">{{entry.playlist?.showType}}#{{entry.playlist?.showNumber}}</a>
             </div>
         </dd>
     </dl>

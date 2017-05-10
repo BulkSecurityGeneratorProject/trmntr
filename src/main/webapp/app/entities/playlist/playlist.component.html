@@ -17,10 +17,10 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="showNumber"><span jhiTranslate="trmntrApp.playlist.showNumber">Show Number</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="showNumber"><span jhiTranslate="trmntrApp.playlist.showNumber">Show</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="theme"><span jhiTranslate="trmntrApp.playlist.theme">Theme</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="guest"><span jhiTranslate="trmntrApp.playlist.guest">Guest</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="airDate"><span jhiTranslate="trmntrApp.playlist.airDate">Air Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="airDate"><span jhiTranslate="trmntrApp.playlist.airDate">Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="recordUrl"><span jhiTranslate="trmntrApp.playlist.recordUrl">Record Url</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
@@ -31,7 +31,7 @@
                 <td>{{playlist.showType}}#{{playlist.showNumber}}</td>
                 <td [innerHTML]="playlist.theme"></td>
                 <td [innerHTML]="playlist.guest"></td>
-                <td>{{playlist.airDate | date:'mediumDate'}}</td>
+                <td>{{playlist.airDate | date:'dd/MM/y'}}</td>
                 <td><a *ngIf="playlist.recordUrl" href="{{playlist.recordUrl}}">link</a></td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
