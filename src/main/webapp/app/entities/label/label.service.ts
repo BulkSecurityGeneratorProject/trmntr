@@ -7,6 +7,7 @@ import { Label } from './label.model';
 export class LabelService {
 
     private resourceUrl = 'api/labels';
+    private resourceSearchUrl = 'api/_search/labels';
 
     constructor(private http: Http) { }
 
@@ -39,6 +40,12 @@ export class LabelService {
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
+
+    search(req?: any): Observable<Response> {
+        let options = this.createRequestOption(req);
+        return this.http.get(this.resourceSearchUrl, options);
+    }
+
     private createRequestOption(req?: any): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         if (req) {

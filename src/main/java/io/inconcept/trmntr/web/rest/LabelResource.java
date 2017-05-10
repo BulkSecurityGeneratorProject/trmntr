@@ -33,7 +33,7 @@ public class LabelResource {
     private final Logger log = LoggerFactory.getLogger(LabelResource.class);
 
     private static final String ENTITY_NAME = "label";
-        
+
     private final LabelRepository labelRepository;
 
     public LabelResource(LabelRepository labelRepository) {
@@ -125,4 +125,22 @@ public class LabelResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * SEARCH  /_search/label?query=:query : search for the label corresponding
+     * to the query.
+     *
+     * @param query the query of the label search
+     * @param pageable the pagination information
+     * @return the result of the search
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @GetMapping("/_search/labels")
+    @Timed
+    public ResponseEntity<List<Label>> searchLabels(@RequestParam String query, @ApiParam Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Labels for query {}", query);
+        Page<Label> page = labelRepository.findByNameIgnoreCaseContaining(query, pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/labels");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }
