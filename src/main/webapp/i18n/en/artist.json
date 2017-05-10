@@ -4,7 +4,8 @@
             "home": {
                 "title": "Artists",
                 "createLabel": "Create a new Artist",
-                "createOrEditLabel": "Create or edit a Artist"
+                "createOrEditLabel": "Create or edit a Artist",
+                "search": "Search for Artist"
             },
             "created": "A new Artist is created with identifier {{ param }}",
             "updated": "A Artist is updated with identifier {{ param }}",

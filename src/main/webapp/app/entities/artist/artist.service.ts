@@ -7,6 +7,7 @@ import { Artist } from './artist.model';
 export class ArtistService {
 
     private resourceUrl = 'api/artists';
+    private resourceSearchUrl = 'api/_search/artists';
 
     constructor(private http: Http) { }
 
@@ -39,6 +40,12 @@ export class ArtistService {
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
+
+    search(req?: any): Observable<Response> {
+        let options = this.createRequestOption(req);
+        return this.http.get(this.resourceSearchUrl, options);
+    }
+
     private createRequestOption(req?: any): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         if (req) {
