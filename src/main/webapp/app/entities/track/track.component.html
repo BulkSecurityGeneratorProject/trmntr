@@ -42,12 +42,12 @@
                 <td>{{track.title}}</td>
                 <td>
                     <div *ngIf="track.artist">
-                        <a [routerLink]="['../artist', track.artist?.id ]" >{{track.artist?.id}}</a>
+                        <a [routerLink]="['../artist', track.artist?.id ]" >{{track.artist?.name}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="track.album">
-                        <a [routerLink]="['../album', track.album?.id ]" >{{track.album?.id}}</a>
+                        <a [routerLink]="['../album', track.album?.id ]" >{{track.album?.title}}</a>
                     </div>
                 </td>
                 <td class="text-right">

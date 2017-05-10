@@ -29,14 +29,14 @@
             <label jhiTranslate="trmntrApp.track.artist" for="field_artist">Artist</label>
             <select class="form-control" id="field_artist" name="artist" [(ngModel)]="track.artist" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="artistOption.id === track.artist?.id ? track.artist : artistOption" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.id}}</option>
+                <option [ngValue]="artistOption.id === track.artist?.id ? track.artist : artistOption" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="trmntrApp.track.album" for="field_album">Album</label>
             <select class="form-control" id="field_album" name="album" [(ngModel)]="track.album" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="albumOption.id === track.album?.id ? track.album : albumOption" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.id}}</option>
+                <option [ngValue]="albumOption.id === track.album?.id ? track.album : albumOption" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.title}}</option>
             </select>
         </div>
     </div>
