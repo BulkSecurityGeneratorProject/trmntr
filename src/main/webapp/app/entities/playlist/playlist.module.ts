@@ -1,7 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { TrmntrSharedModule } from '../../shared';
+
 import {
     PlaylistService,
     PlaylistPopupService,
@@ -23,6 +25,7 @@ const ENTITY_STATES = [
 
 @NgModule({
     imports: [
+        ReactiveFormsModule,
         TrmntrSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],

@@ -1,103 +1,130 @@
-<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+<form [formGroup]="editForm" name="editForm" role="form" novalidate (ngSubmit)="save()">
 
     <div class="modal-header">
         <h4 class="modal-title" id="myPlaylistLabel" jhiTranslate="trmntrApp.playlist.home.createOrEditLabel">Create or edit a Playlist</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!playlist.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="playlist.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.showNumber" for="field_showNumber">Show Number</label>
-            <input type="text" class="form-control" name="showNumber" id="field_showNumber"
-                [(ngModel)]="playlist.showNumber"
-            required />
-            <div [hidden]="!(editForm.controls.showNumber?.dirty && editForm.controls.showNumber?.invalid)">
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.showType" for="field_type">Type</label>
+            <input type="text" class="form-control" name="showType" id="field_type" formControlName="showType"/>
+            <div [hidden]="!(editForm.controls.showType?.dirty && editForm.controls.showType?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.showNumber?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                       [hidden]="!editForm.controls.showType?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.theme" for="field_theme">Theme</label>
-            <input type="text" class="form-control" name="theme" id="field_theme"
-                [(ngModel)]="playlist.theme"
-             />
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.showNumber" for="field_number">Number</label>
+            <input type="text" class="form-control" name="showNumber" id="field_number" formControlName="showNumber"/>
+            <div [hidden]="!(editForm.controls.showNumber?.dirty && editForm.controls.showNumber?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.showNumber?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.guest" for="field_guest">Guest</label>
-            <input type="text" class="form-control" name="guest" id="field_guest"
-                [(ngModel)]="playlist.guest"
-             />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.airDate" for="field_airDate">Air Date</label>
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.airDate" for="field_date">Date</label>
             <div class="input-group">
-                <input id="field_airDate" type="text" class="form-control" name="airDate" ngbDatepicker  #airDateDp="ngbDatepicker" [(ngModel)]="playlist.airDate"
-                required/>
+                <input id="field_date" type="text" class="form-control" name="airDate" ngbDatepicker #dateDp="ngbDatepicker" formControlName="airDate"/>
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" (click)="airDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" (click)="dateDp.toggle()"><i class="fa fa-calendar"></i></button>
                 </span>
             </div>
             <div [hidden]="!(editForm.controls.airDate?.dirty && editForm.controls.airDate?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.airDate?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.airDate?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.showType" for="field_showType">Show Type</label>
-            <input type="text" class="form-control" name="showType" id="field_showType"
-                [(ngModel)]="playlist.showType"
-            required />
-            <div [hidden]="!(editForm.controls.showType?.dirty && editForm.controls.showType?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.showType?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
+            <label jhiTranslate="trmntrApp.playlist.member" for="field_member">Member</label>
+            <select class="form-control" id="field_member" multiple name="member" formControlName="members">
+                <option [ngValue]="getSelected(playlist.members, memberOption)"
+                        *ngFor="let memberOption of members; trackBy: trackMemberById" >{{memberOption.name}}
+                </option>
+            </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.recordUrl" for="field_recordUrl">Record Url</label>
-            <input type="text" class="form-control" name="recordUrl" id="field_recordUrl"
-                [(ngModel)]="playlist.recordUrl"
-             />
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.theme" for="field_theme">Theme</label>
+            <textarea class="form-control" name="theme" id="field_theme" formControlName="theme"></textarea>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.createTime" for="field_createTime">Create Time</label>
-            <div class="d-flex">
-                <input id="field_createTime" type="datetime-local" class="form-control" name="createTime" [(ngModel)]="playlist.createTime"
-                  />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.updateTime" for="field_updateTime">Update Time</label>
-            <div class="d-flex">
-                <input id="field_updateTime" type="datetime-local" class="form-control" name="updateTime" [(ngModel)]="playlist.updateTime"
-                  />
-            </div>
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.guest" for="field_guest">Guest</label>
+            <textarea class="form-control" name="guest" id="field_guest" formControlName="guest" ></textarea>
         </div>
 
         <div class="form-group">
-            <label jhiTranslate="trmntrApp.playlist.member" for="field_member">Member</label>
-            <select class="form-control" id="field_member" multiple name="member" [(ngModel)]="playlist.members">
-                <option [ngValue]="getSelected(playlist.members, memberOption)" *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.id}}</option>
-            </select>
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.recordUrl" for="field_recordUrl">Record
+                Url</label>
+            <input type="text" class="form-control" name="recordUrl" id="field_recordUrl"  formControlName="recordUrl"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="trmntrApp.playlist.tracklist">Tracklist</label>
+            <!--tracklist-->
+            <div formArrayName="tracklist">
+                <div *ngFor="let entry of editForm.controls.tracklist.controls; let i=index" class="panel panel-default">
+                    <div class="panel-body col-xs-12" [formGroupName]="i">
+                        <!-- The repeated entry template -->
+                        <div class="form-group col-xs-2">
+                            <span>{{i+1}}</span>
+                        </div>
+                        <div class="form-group col-xs-2">
+                            <label class="sr-only">artist</label>
+                            <input type="text" required class="form-control" formControlName="artist">
+                            <small [hidden]="editForm.controls.tracklist.controls[i].controls.artist.valid" class="text-danger">
+                                Artist is required
+                            </small>
+                        </div>
+                        <div class="form-group col-xs-2">
+                            <label class="sr-only">track</label>
+                            <input type="text" required class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group col-xs-2">
+                            <label class="sr-only">release</label>
+                            <input type="text" required class="form-control" formControlName="release">
+                        </div>
+                        <div class="form-group col-xs-2">
+                            <label class="sr-only">label</label>
+                            <input type="text" required class="form-control" formControlName="label">
+                        </div>
+                        <div class="form-group col-xs-2">
+                            <span class="fa fa-times pull-right" *ngIf="editForm.controls.tracklist.controls.length > 1" (click)="removeTrack(i)"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- End of the repeated entry template -->
+                </div>
+            </div>
+            <div class="margin-20">
+                <a (click)="addTrack()" style="cursor: default">
+                    Add another address +
+                </a>
+            </div>
         </div>
     </div>
+
+
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+        <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
+
+
+    <div class="margin-20">
+        <div>editForm details:-</div>
+        <pre>Is editForm valid?: <br>{{editForm.valid | json}}</pre>
+        <pre>form value: <br>{{editForm.value | json}}</pre>
+    </div>
 </form>
+

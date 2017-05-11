@@ -12,7 +12,8 @@ export class Playlist {
         public createTime?: any,
         public updateTime?: any,
         public entry?: Entry,
-        public member?: Member,
+        public members?: Member[],
+        public entries?: Entry[],
     ) {
     }
 }
